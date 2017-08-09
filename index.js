@@ -41,8 +41,8 @@ app.get('/', function (req, res, next) {
 
 // Exposing the API endpoint
 app.post('/api/v1/', function (req, res, next) {
-    
-  unirest.get('https://daxeel-abbreviations-v1.p.mashape.com/all/' + result.body.parameters.Abbreviation)
+
+  unirest.get('https://daxeel-abbreviations-v1.p.mashape.com/all/' + req.body.result.body.parameters.Abbreviation)
     .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
     .end(function (result) {
       console.log(result.status, result.headers, result.body)
