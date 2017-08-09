@@ -42,44 +42,68 @@ app.get('/', function (req, res, next) {
 })
 
 // Exposing the API endpoint
-app.all('/api/v1/:Abbreviation?', function (req, res, next) {
+app.post('/api/v1/', function (req, res, next) {
   logger.info('API call start')
 
-  let abbreviation = req.body.result ? req.body.result.parameters.Abbreviation : req.params.Abbreviation
-  logger.info('Abbreviation', abbreviation)
+  logger.info('Action', req.body.result.action)
 
-  let url = 'https://daxeel-abbreviations-v1.p.mashape.com/all/' + abbreviation
+  switch (req.body.result.action) {
+    case 'abbreviation.search': {
 
-  logger.info('URL', url)
+      let abbreviation = req.body.result.parameters.Abbreviation
 
-  unirest.get(url)
-    .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
-    .end(function (result) {
-      let voiceData = null
-      let defs = JSON.parse(result.body)
+      let url = 'https://daxeel-abbreviations-v1.p.mashape.com/all/' + abbreviation
 
-      if (defs[0]['fullform'] == 'Not found') {
-        voiceData = "Oh, I'm sorry. It's not in my memory yet."
-        logger.info('Abbreviation not found')
-      } else {
-        logger.info('defsNumber', defs.length)
+      logger.info('URL', url)
 
-        logger.info('defs', defs)
+      unirest.get(url)
+        .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
+        .end(function (result) {
+          let voiceData = null
+          let defs = JSON.parse(result.body)
 
-        voiceData = 'It stands for ' + defs[0]['fullform'] + '. '
+          if (defs[0]['fullform'] == 'Not found') {
+            voiceData = "Oh, I'm sorry. It's not in my memory yet."
+            logger.info('Abbreviation not found')
+          } else {
+            logger.info('defsNumber', defs.length)
 
-        if (defs.length > 1) {
-          voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
-        }
-      }
+            logger.info('defs', defs)
+
+            voiceData = 'It stands for ' + defs[0]['fullform'] + '. '
+
+            if (defs.length > 1) {
+              voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
+            }
+          }
+
+          let output = {
+            speech: voiceData,
+            displayText: voiceData,
+            data: defs,
+            contextOut: [{
+              abbreviation: abbreviation,
+              meaning: defs[0]['meaning'],
+              defsNumber: defs.length
+            }],
+            source: 'Abbreviations Expert'
+          }
+          logger.info('output', output)
+
+          res.setHeader('Content-Type', 'application/json')
+          res.send(JSON.stringify(output))
+        })
+
+      break
+    }
+    default: {
 
       let output = {
-        speech: voiceData,
-        displayText: voiceData,
+        speech: 'Action not supported',
+        displayText: 'Action not supported',
         data: defs,
         contextOut: [{
-          abbreviation: abbreviation,
-          defsNumber: defs.length
+          action: req.body.result.action
         }],
         source: 'Abbreviations Expert'
       }
@@ -87,7 +111,9 @@ app.all('/api/v1/:Abbreviation?', function (req, res, next) {
 
       res.setHeader('Content-Type', 'application/json')
       res.send(JSON.stringify(output))
-    })
+
+    }
+  }
 })
 
 // Starting Express
