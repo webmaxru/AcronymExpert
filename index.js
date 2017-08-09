@@ -81,7 +81,16 @@ app.post('/api/v1/', function (req, res, next) {
             speech: voiceData,
             displayText: voiceData,
             data: defs,
-            contextOut: [],
+            contextOut: [{
+              name: 'def-context',
+              lifespan: 2,
+              parameters: {
+                abbreviation: abbreviation,
+                meaning: defs[0]['meaning'],
+                defsNumber: defs.length
+              }
+
+            }],
             source: 'Abbreviations Expert'
           }
           logger.info('output', output)
