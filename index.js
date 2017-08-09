@@ -41,14 +41,19 @@ app.get('/', function (req, res, next) {
 
 // Exposing the API endpoint
 app.post('/api/v1/', function (req, res, next) {
+  logger.info('API call start')
 
-  unirest.get('https://daxeel-abbreviations-v1.p.mashape.com/all/' + req.body.result.body.parameters.Abbreviation)
+  let url = 'https://daxeel-abbreviations-v1.p.mashape.com/all/' + req.body.result.parameters.Abbreviation
+
+  logger.info('URL', url)
+
+  unirest.get(url)
     .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
     .end(function (result) {
       console.log(result.status, result.headers, result.body)
     })
 
-  logger.info('API call', req.body.result)
+  logger.info('API call end', req.body.result)
   res.send(req.body.result)
 })
 
