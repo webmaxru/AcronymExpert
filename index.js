@@ -56,12 +56,13 @@ app.post('/api/v1/', function (req, res, next) {
     .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
     .end(function (result) {
       let voiceData = null
+      let defs = null
 
       if (!result || result.body[0]['fullform'] == 'Not found') {
         voiceData = "Oh, I'm sorry. It's not in my memory yet."
         logger.info('Abbreviation not found')
       } else {
-        let defs = result.body
+        defs = result.body
         logger.info('defsNumber', defs.length)
 
         logger.info('defs', defs)
