@@ -42,10 +42,10 @@ app.get('/', function (req, res, next) {
 })
 
 // Exposing the API endpoint
-app.post('/api/v1/', function (req, res, next) {
+app.get('/api/v1/:Abbreviation?', function (req, res, next) {
   logger.info('API call start')
 
-  let abbreviation = req.body.result.parameters.Abbreviation
+  let abbreviation = req.body.result ? req.body.result.parameters.Abbreviation : req.params.Abbreviation
   logger.info('Abbreviation', abbreviation)
 
   let url = 'https://daxeel-abbreviations-v1.p.mashape.com/all/' + abbreviation
@@ -56,18 +56,17 @@ app.post('/api/v1/', function (req, res, next) {
     .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
     .end(function (result) {
       let voiceData = null
-      let defs = null
+      let defs = JSON.parse(result.body)
 
-      if (!result || result.body[0]['fullform'] == 'Not found') {
+      if (defs[0]['fullform'] == 'Not found') {
         voiceData = "Oh, I'm sorry. It's not in my memory yet."
         logger.info('Abbreviation not found')
       } else {
-        defs = result.body
         logger.info('defsNumber', defs.length)
 
         logger.info('defs', defs)
 
-        voiceData = 'It stands for ' + defs[0]['fullform'] + '.'
+        voiceData = 'It stands for ' + defs[0]['fullform'] + '. '
 
         if (defs.length > 1) {
           voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
