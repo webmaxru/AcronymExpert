@@ -42,7 +42,7 @@ app.get('/', function (req, res, next) {
 })
 
 // Exposing the API endpoint
-app.get('/api/v1/:Abbreviation?', function (req, res, next) {
+app.all('/api/v1/:Abbreviation?', function (req, res, next) {
   logger.info('API call start')
 
   let abbreviation = req.body.result ? req.body.result.parameters.Abbreviation : req.params.Abbreviation
