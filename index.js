@@ -1,17 +1,49 @@
-var apiai = require('apiai');
+// Scaffolding Express app
+var express = require('express')
+var app = express()
+var server = require('http').createServer(app)
 
-var app = apiai('a7ff50039e5d44a28cee822de698909d');
+var bodyParser = require('body-parser')
+app.use(bodyParser.json())
 
-var request = app.textRequest('<Your text query>', {
-   sessionId: '<unique session id>'
-});
+// Enabling CORS
+var cors = require('cors')
+app.use(cors())
+app.options('*', cors())
 
-request.on('response', function(response) {
-   console.log(response);
-});
+// Setting up detailed logging
+var winston = require('winston')
+var logger = new winston.Logger({
+  transports: [
+    new winston.transports.Console({
+      handleExceptions: true,
+      json: true,
+      level: 'info' // Set 'debug' for super-detailed output
+    })
+  ],
+  exitOnError: false
+})
+logger.stream = {
+  write: function (message, encoding) {
+    logger.info(message)
+  }
+}
+app.use(require('morgan')('combined', {
+  'stream': logger.stream
+}))
 
-request.on('error', function(error) {
-   console.log(error);
-});
+// Default endpoint
+app.get('/', function (req, res, next) {
+  res.send('Abbreviations Expert API Works!')
+})
 
-request.end();
+// Exposing the API endpoint
+app.post('/api/v1/', function (req, res, next) {
+  res.send(req.body.result)
+})
+
+// Starting Express
+
+server.listen(process.env.PORT || 3000, function () {
+  logger.info('Listening on port ' + (process.env.PORT || 3000))
+})
