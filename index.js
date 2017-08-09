@@ -81,6 +81,8 @@ app.all('/api/v1/:Abbreviation?', function (req, res, next) {
         source: 'Abbreviations Expert'
       }
       logger.info('output', output)
+
+      res.setHeader('Content-Type', 'application/json')
       res.send(JSON.stringify(output))
     })
 })
