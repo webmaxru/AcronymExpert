@@ -81,25 +81,7 @@ app.post('/api/v1/', function (req, res, next) {
             speech: voiceData,
             displayText: voiceData,
             data: defs,
-            contextOut: [{
-              name: 'Searchforabbreviation-followup',
-              lifespan: 2,
-              parameters: {
-                abbreviation: abbreviation,
-                meaning: defs[0]['meaning'],
-                defsNumber: defs.length
-              }
-
-            },{
-                name: 'searchforabbreviation-followup',
-                lifespan: 2,
-                parameters: {
-                  abbreviation: abbreviation,
-                  meaning: defs[0]['meaning'],
-                  defsNumber: defs.length
-                }
-  
-              }],
+            contextOut: [],
             source: 'Abbreviations Expert'
           }
           logger.info('output', output)
