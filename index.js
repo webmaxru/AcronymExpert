@@ -39,6 +39,7 @@ app.get('/', function (req, res, next) {
 
 // Exposing the API endpoint
 app.post('/api/v1/', function (req, res, next) {
+  logger.info('API call', req.body.result)
   res.send(req.body.result)
 })
 
