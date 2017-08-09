@@ -82,7 +82,7 @@ app.post('/api/v1/', function (req, res, next) {
             displayText: voiceData,
             data: defs,
             contextOut: [{
-              name: 'searchforabbreviation-followup',
+              name: 'Searchforabbreviation-followup',
               lifespan: 2,
               parameters: {
                 abbreviation: abbreviation,
