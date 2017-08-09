@@ -55,7 +55,10 @@ app.post('/api/v1/', function (req, res, next) {
   unirest.get(url)
     .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
     .end(function (result) {
+      let voiceData = null
+
       if (!result || result.body[0]['fullform'] == 'Not found') {
+        voiceData = "Oh, I'm sorry. It's not in my memory yet."
         logger.info('Abbreviation not found')
       } else {
         let defs = result.body
@@ -63,23 +66,21 @@ app.post('/api/v1/', function (req, res, next) {
 
         logger.info('defs', defs)
 
-        let voiceData = 'It stands for ' + defs[0]['fullform'] + '.'
+        voiceData = 'It stands for ' + defs[0]['fullform'] + '.'
 
         if (defs.length > 1) {
           voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
         }
-
-        let output = {
-          speech: voiceData,
-          displayText: voiceData,
-          data: {defs},
-          contextOut: [defs],
-          source: 'Abbreviations Expert'
-        }
       }
 
+      let output = {
+        speech: voiceData,
+        displayText: voiceData,
+        data: {defs},
+        contextOut: [defs],
+        source: 'Abbreviations Expert'
+      }
       logger.info('output', output)
-
       res.send(output)
     })
 })
