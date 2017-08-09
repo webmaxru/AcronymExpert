@@ -6,6 +6,8 @@ var server = require('http').createServer(app)
 var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
+var unirest = require('unirest')
+
 // Enabling CORS
 var cors = require('cors')
 app.use(cors())
@@ -39,6 +41,13 @@ app.get('/', function (req, res, next) {
 
 // Exposing the API endpoint
 app.post('/api/v1/', function (req, res, next) {
+    
+  unirest.get('https://daxeel-abbreviations-v1.p.mashape.com/all/' + result.body.parameters.Abbreviation)
+    .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
+    .end(function (result) {
+      console.log(result.status, result.headers, result.body)
+    })
+
   logger.info('API call', req.body.result)
   res.send(req.body.result)
 })
