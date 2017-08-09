@@ -8,6 +8,8 @@ app.use(bodyParser.json())
 
 var unirest = require('unirest')
 
+var memStorage = []
+
 // Enabling CORS
 var cors = require('cors')
 app.use(cors())
@@ -43,17 +45,26 @@ app.get('/', function (req, res, next) {
 app.post('/api/v1/', function (req, res, next) {
   logger.info('API call start')
 
-  let url = 'https://daxeel-abbreviations-v1.p.mashape.com/all/' + req.body.result.parameters.Abbreviation
+  let abbreviation = req.body.result.parameters.Abbreviation
+  logger.info('Abbreviation', abbreviation)
+
+  let url = 'https://daxeel-abbreviations-v1.p.mashape.com/all/' + abbreviation
 
   logger.info('URL', url)
 
   unirest.get(url)
     .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
-    .end(function (result) {
-      console.log(result.status, result.headers, result.body)
+    .end(function (definitiions) {
+      if (!definitiions || definitiions.body[0]['fullform'] == 'Not found') {
+        logger.info('Abbreviature not found')
+      } else {
+        memStorage[abbreviation] = definitiions.body
+        logger.info('memStorage', memStorage)
+      }
     })
 
-  logger.info('API call end', req.body.result)
+  logger.info('API call end')
+
   res.send(req.body.result)
 })
 
