@@ -76,8 +76,11 @@ app.all('/api/v1/:Abbreviation?', function (req, res, next) {
       let output = {
         speech: voiceData,
         displayText: voiceData,
-        data: {defs},
-        contextOut: [defs],
+        data: defs,
+        contextOut: [{
+          abbreviation: abbreviation,
+          defsNumber: defs.length
+        }],
         source: 'Abbreviations Expert'
       }
       logger.info('output', output)
