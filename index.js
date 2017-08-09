@@ -90,7 +90,16 @@ app.post('/api/v1/', function (req, res, next) {
                 defsNumber: defs.length
               }
 
-            }],
+            },{
+                name: 'searchforabbreviation-followup',
+                lifespan: 2,
+                parameters: {
+                  abbreviation: abbreviation,
+                  meaning: defs[0]['meaning'],
+                  defsNumber: defs.length
+                }
+  
+              }],
             source: 'Abbreviations Expert'
           }
           logger.info('output', output)
