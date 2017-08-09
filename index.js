@@ -71,7 +71,7 @@ app.post('/api/v1/', function (req, res, next) {
             logger.info('defs', defs)
 
             voiceData = 'It stands for ' + defs[0]['fullform'] + '. '
-            voiceData = 'Do you want to know what it is?'
+            voiceData += 'Do you want to know what it is?'
 
             if (defs.length > 1) {
               //voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
