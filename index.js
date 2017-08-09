@@ -71,9 +71,10 @@ app.post('/api/v1/', function (req, res, next) {
             logger.info('defs', defs)
 
             voiceData = 'It stands for ' + defs[0]['fullform'] + '. '
+            voiceData = 'Do you want to know what it is?'
 
             if (defs.length > 1) {
-              voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
+              //voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
             }
           }
 
@@ -91,7 +92,7 @@ app.post('/api/v1/', function (req, res, next) {
               }
 
             }],
-            source: 'Abbreviations Expert'
+            source: 'Acronym Expert'
           }
           logger.info('output', output)
 
@@ -110,7 +111,7 @@ app.post('/api/v1/', function (req, res, next) {
         contextOut: [{
           action: req.body.result.action
         }],
-        source: 'Abbreviations Expert'
+        source: 'Acronym Expert'
       }
       logger.info('output', output)
 
