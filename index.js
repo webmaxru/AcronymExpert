@@ -60,10 +60,17 @@ app.post('/api/v1/', function (req, res, next) {
         .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
         .end(function (result) {
           let voiceData = null
+          let followupEvent = null
           let defs = JSON.parse(result.body)
 
           if (defs[0]['fullform'] == 'Not found') {
-            voiceData = "Oh, I'm sorry. It's not in my memory yet."
+            followupEvent = {
+              name: 'ACRONYM_NOT_FOUND',
+              data: {
+                abbreviation: abbreviation
+              }
+            }
+
             logger.info('Abbreviation not found')
           } else {
             logger.info('defsNumber', defs.length)
@@ -74,7 +81,7 @@ app.post('/api/v1/', function (req, res, next) {
             voiceData += 'Do you want to know what it is?'
 
             if (defs.length > 1) {
-              //voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
+              // voiceData += 'There are ' + (defs.length - 1) + ' more definitions'
             }
           }
 
@@ -92,7 +99,8 @@ app.post('/api/v1/', function (req, res, next) {
               }
 
             }],
-            source: 'Acronym Expert'
+            source: 'Acronym Expert',
+            followupEvent: followupEvent
           }
           logger.info('output', output)
 

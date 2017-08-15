@@ -32,7 +32,6 @@ exports.acronymexpert = functions.https.onRequest((req, res) => {
         unirest.get(url)
           .header('X-Mashape-Key', 'j9WEQ4Kn23mshj8qs54Xe0NaNPJcp1gt27VjsnzmBGdEAMHYZ5')
           .end(function (result) {
-
             console.log('mashape result', result)
 
             let voiceData = null
@@ -45,7 +44,7 @@ exports.acronymexpert = functions.https.onRequest((req, res) => {
                 data: {
                   abbreviation: abbreviation
                 }
-             }
+              }
 
               console.log('Abbreviation not found')
             } else {
