@@ -1,3 +1,5 @@
+//https://us-central1-abbreviationsexpert.cloudfunctions.net/acronymexpert
+
 'use strict'
 
 const functions = require('firebase-functions')
