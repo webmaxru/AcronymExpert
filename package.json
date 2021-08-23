@@ -1,20 +1,14 @@
 {
-  "name": "abbreviationexpert",
+  "name": "acronymexpert",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "cors": "^2.8.4",
-    "express": "^4.15.4",
-    "morgan": "^1.8.2",
-    "unirest": "^0.5.1",
-    "winston": "^2.3.1"
-  }
+    "cors": "^2.8.5",
+    "unirest": "^0.6.0"
+  },
+  "devDependencies": {}
 }

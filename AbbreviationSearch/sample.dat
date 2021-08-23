@@ -1,0 +1,68 @@
+{
+  "id": "7d4de507-2cfd-4e81-8c0d-e992983fb497-245e572a",
+  "lang": "en",
+  "sessionId": "4fb1dbba-9bad-4fe5-ff9b-56c0e96a72ed",
+  "timestamp": "2021-08-23T12:21:27.370037Z",
+  "result": {
+    "source": "agent",
+    "resolvedQuery": "MBA",
+    "action": "abbreviation.search",
+    "actionIncomplete": false,
+    "score": 0.3,
+    "parameters": {
+      "Abbreviation": "MBA"
+    },
+    "contexts": [
+      {
+        "name": "searchforabbreviation-followup",
+        "lifespan": 2,
+        "parameters": {
+          "Abbreviation": "MBA",
+          "Abbreviation.original": "MBA"
+        }
+      },
+      {
+        "name": "def-context",
+        "lifespan": 5,
+        "parameters": {
+          "Abbreviation": "MBA",
+          "Abbreviation.original": "MBA"
+        }
+      },
+      {
+        "name": "__system_counters__",
+        "lifespan": 0,
+        "parameters": {
+          "no-input": 0,
+          "no-match": 0,
+          "Abbreviation": "MBA",
+          "Abbreviation.original": "MBA"
+        }
+      }
+    ],
+    "metadata": {
+      "intentId": "5ede2856-86df-493f-9610-0d392247d4bb",
+      "intentName": "Search for abbreviation",
+      "webhookUsed": "true",
+      "webhookForSlotFillingUsed": "false",
+      "isFallbackIntent": "false"
+    },
+    "fulfillment": {
+      "speech": "",
+      "messages": [
+        {
+          "type": 0,
+          "speech": ""
+        }
+      ]
+    }
+  },
+  "status": {
+    "code": 200,
+    "errorType": "success"
+  },
+  "originalRequest": {
+    "data": {},
+    "source": "DIALOGFLOW_CONSOLE"
+  }
+}
